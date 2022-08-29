@@ -4,7 +4,7 @@ import cv2
 VIDEO_FPS = 25
 FRAME_SIZE = (1920, 1080)
 
-capture = cv2.VideoCapture("../tennis ball detection/videos/test_game_2.avi")
+capture = cv2.VideoCapture("videos/test_game_2.avi")
 
 video_cod = cv2.VideoWriter_fourcc(*'mp4v')
 writer = cv2.VideoWriter(
@@ -28,8 +28,6 @@ x2 = int(width * list_of_yolo_data[1] + width * list_of_yolo_data[3] / 2)
 y2 = int(height * list_of_yolo_data[2] + height * list_of_yolo_data[4] / 2)
 
 # Mouse function
-
-
 def select_point(event, x, y, flags, params):
     global point, point_selected, old_points
     if event == cv2.EVENT_LBUTTONDOWN:
@@ -47,6 +45,9 @@ old_points = np.array([[x1, y1]], dtype=np.float32)
 
 while capture.isOpened():
     ret, frame = capture.read()
+    if frame is None:
+        break
+
     frame_gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
     blur = cv2.GaussianBlur(frame_gray, (3, 3), 0)
 
@@ -58,13 +59,13 @@ while capture.isOpened():
         old_points = new_points
 
         x, y = new_points.ravel()
-        cv2.circle(frame, (int(x), int(y)), 5, (0, 0, 255))
+        cv2.circle(frame, (int(x), int(y)), 10, (0, 0, 255), 4)
     cv2.imshow('Frame', frame)
     writer.write(frame)
 
     if cv2.waitKey(1) == 27:
         break
 
-capture.release()
 writer.release()
+capture.release()
 cv2.destroyAllWindows()

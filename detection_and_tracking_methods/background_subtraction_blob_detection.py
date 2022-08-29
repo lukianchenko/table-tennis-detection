@@ -4,10 +4,7 @@ import numpy as np
 backSub = cv2.createBackgroundSubtractorMOG2()
 # backSub = cv.createBackgroundSubtractorKNN(dist2Threshold=1000, detectShadows=False)
 
-capture = cv2.VideoCapture("../tennis ball detection/videos/train_game_2.avi")
-if not capture.isOpened():
-    print('Unable to open video')
-    exit(0)
+capture = cv2.VideoCapture("videos/test_game_2.avi") 
     
 # Setup SimpleBlobDetector parameters.
 params = cv2.SimpleBlobDetector_Params()
@@ -36,7 +33,7 @@ params.minInertiaRatio = 0.01
 # Create a detector with the parameters
 detector = cv2.SimpleBlobDetector_create(params)
 
-while True:
+while capture.isOpened():
     ret, frame = capture.read()
     if frame is None:
         break

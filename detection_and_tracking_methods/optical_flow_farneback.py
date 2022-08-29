@@ -5,7 +5,7 @@ VIDEO_FPS = 25
 FRAME_SIZE = (1920, 1080)
 
 
-def draw_flaw(img, flow, step=20):
+def draw_flow(img, flow, step=20):
     h, w = img.shape[:2]
     y, x = np.mgrid[step/2:h:step, step/2:w:step].reshape(2, -1).astype(int)
     fx, fy = flow[y, x].T
@@ -33,17 +33,15 @@ def draw_hsv(flow):
 
 
 if __name__ == "__main__":
-    capture = cv2.VideoCapture("../tennis ball detection/videos/test_game_2.avi")
+    capture = cv2.VideoCapture("videos/test_game_2.avi")
     ret, img = capture.read()
 
     video_cod = cv2.VideoWriter_fourcc(*'mp4v')
     writer = cv2.VideoWriter(
-        f'C:/Users/AcerSwift3/Desktop/Abto results/optical_flow_farneback.mp4', video_cod, VIDEO_FPS, FRAME_SIZE)
+        f'C:/Users/AcerSwift3/Desktop/Abto results/optical_flow_farneback_hsv.mp4', video_cod, VIDEO_FPS, FRAME_SIZE)
 
     prevgray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
     show_hsv = True
-    show_glitch = False
-    cur_glitch = img.copy()
 
     while capture.isOpened():
         (ret, img) = capture.read()
@@ -52,7 +50,8 @@ if __name__ == "__main__":
         flow = cv2.calcOpticalFlowFarneback(
             prevgray, gray, None, 0.5, 10, 20, 3, 5, 1.1, cv2.OPTFLOW_FARNEBACK_GAUSSIAN)
         prevgray = gray
-        cv2.imshow('flow', draw_flaw(gray, flow))
+        img_flow = draw_flow(gray, flow)
+        cv2.imshow('flow', img_flow)
 
         if show_hsv:
             hsv = draw_hsv(flow)
@@ -63,7 +62,7 @@ if __name__ == "__main__":
             gray_hsv = cv2.filter2D(gray_hsv, -1, kernel)
 
             contours, hierarchy = cv2.findContours(
-                gray_hsv, cv2.RETR_CCOMP, cv2.CHAIN_APPROX_SIMPLE)
+                gray_hsv, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
 
             contour_list = []
             for cnt in contours:
@@ -71,7 +70,7 @@ if __name__ == "__main__":
                 approx = cv2.approxPolyDP(cnt, epsilon, True)
                 area = cv2.contourArea(cnt)
 
-                if len(approx) > 8 and area > 20 and area < 250:
+                if len(approx) > 8 and area > 100 and area < 400:
                     (x, y, w, h) = cv2.boundingRect(cnt)
                     cv2.rectangle(vis, (x, y), (x + w, y + h), (0, 255, 0), 5)
                     contour_list.append(cnt)
