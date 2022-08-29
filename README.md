@@ -2,7 +2,7 @@
 
 This project uses OpenCV and computer vision techniques to detect and track a table tennis ball.
 
-Based on dataset https://www.kaggle.com/datasets/ketzoomer/table-tennis-ball-position-detection-dataset)
+Based on dataset https://www.kaggle.com/datasets/ketzoomer/table-tennis-ball-position-detection-dataset
 
 Team members:<br>
     <li>Hanna Sholotiuk
@@ -43,7 +43,7 @@ Clone repository to desired location.
 
 ### Step 2: Run script
 
-You can run script <b>extended_yolo.py</b> with video or sequence of images from test folder from dataset. 
+You can run script <b>extended_yolo.py</b> with video or sequence of images from test folder from dataset. Create a new folder called "videos" in the working directory and store videos or images here.
 
 ### Step 3: Analyze result
 
