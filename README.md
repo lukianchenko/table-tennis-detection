@@ -43,7 +43,7 @@ Clone repository to desired location.
 
 ### Step 2: Run script
 
-You can run script <b>extended_yolo.py</b> with video <b>test_game_2.avi</b>
+You can run script <b>extended_yolo.py</b> with video or sequence of images from test folder from dataset. 
 
 ### Step 3: Analyze result
 
