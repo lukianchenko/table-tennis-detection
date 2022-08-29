@@ -10,8 +10,7 @@ Team members:<br>
     <li>Serhii Lukianchenko
 
 It is not optimized for extended use. Instead, it showcases an idea of how OpenCV and computer vision can in a simple way be applied to analyze table tennis games.
-        
-        ![final (1)](https://user-images.githubusercontent.com/75932048/187313372-afb7a8f7-a171-4ee4-9c6d-fa457ecbfad7.gif)
+     
 
 1. [Overview](#overview)
 2. [How to use](#usage)
